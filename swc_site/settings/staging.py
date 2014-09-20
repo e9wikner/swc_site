@@ -9,6 +9,6 @@ DATABASES = {
     }
 }
 
-DEBUG = False
-TEMPLATE_DEBUG = False
-ALLOWED_HOSTS = [".swconsulting.se", ]
+DEBUG = True
+TEMPLATE_DEBUG = True
+ALLOWED_HOSTS = []

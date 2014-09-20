@@ -55,3 +55,6 @@ target/
 
 # Pycharm
 .idea/
+
+# Local testing database
+*.db.sqlite3

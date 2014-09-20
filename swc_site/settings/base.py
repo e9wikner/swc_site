@@ -7,7 +7,7 @@ DATABASES: 'PASSWORD': DJANGO_DATABASES_PASSWORD
 
 This settings file should be inherited by e.g. production.py where these
 variables should be set:
-DEBUG, TEMPLATE_DEBUG, ALLOWED_HOSTS
+DEBUG, TEMPLATE_DEBUG, ALLOWED_HOSTS, DATABASES
 
 The environment variable DJANGO_SETTINGS_MODULE should point to the settings
 file to be used.
@@ -67,15 +67,6 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'swc_site.urls'
 
 WSGI_APPLICATION = 'swc_site.wsgi.application'
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'mysql.connector.django',
-        'NAME': "swconsulting",
-        'USER': 'swconsulting',
-        'PASSWORD': get_env("DJANGO_DATABASES_PASSWORD"),
-    }
-}
 
 LANGUAGE_CODE = 'sv_SE'
 
