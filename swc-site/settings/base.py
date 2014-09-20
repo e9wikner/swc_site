@@ -51,7 +51,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'django_markdown',
-    'swc-blog',
+    'swc_blog',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -64,9 +64,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'swc-site.urls'
+ROOT_URLCONF = 'swc_site.urls'
 
-WSGI_APPLICATION = 'swc-site.wsgi.application'
+WSGI_APPLICATION = 'swc_site.wsgi.application'
 
 DATABASES = {
     'default': {
