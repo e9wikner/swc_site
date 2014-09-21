@@ -58,3 +58,6 @@ target/
 
 # Local testing database
 *.db.sqlite3
+
+# Separate repo for blog app
+swc_blog/
