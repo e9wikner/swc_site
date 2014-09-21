@@ -2,6 +2,7 @@
 Django settings for swcblog project.
 
 These settings are loaded from environment variables:
+BASE_DIR = DJANGO_BASE_DIR
 SECRET_KEY = DJANGO_SECRET_KEY
 DATABASES: 'PASSWORD': DJANGO_DATABASES_PASSWORD
 
@@ -23,9 +24,6 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 from django.core.exceptions import ImproperlyConfigured
 
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-
-
 def get_env(var_name):
     """
     Loads the var_name environment variable.
@@ -38,6 +36,8 @@ def get_env(var_name):
     else:
         raise ImproperlyConfigured("Set the {} environment variable"
                                    .format(var_name))
+
+BASE_DIR = get_env("DJANGO_BASE_DIR")
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = get_env("DJANGO_SECRET_KEY")
@@ -52,7 +52,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'django_markdown',
-    'swc_blog',
+    'blog',
 )
 
 MIDDLEWARE_CLASSES = (
