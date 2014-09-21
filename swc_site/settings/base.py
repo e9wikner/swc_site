@@ -83,3 +83,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+# TODO: kan detta komma med blog-appen på nåt sätt
+MARKDOWN_EXTENSIONS = 'codehilite'
+MARKDOWN_EXTENSIONS_CONFIGS = {
+    'codehilite': {
+        'linenums': False,
+        }
+}
