@@ -52,7 +52,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'django_markdown',
-    'blog',
+    'swc_blog',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -84,7 +84,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
-# TODO: kan detta komma med blog-appen på nåt sätt
+# TODO: kan detta komma med swc_blog-appen på nåt sätt
 MARKDOWN_EXTENSIONS = 'codehilite'
 MARKDOWN_EXTENSIONS_CONFIGS = {
     'codehilite': {
