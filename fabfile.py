@@ -35,7 +35,6 @@ def stage(project_dir, commit_args=""):
     # Install blog app
     run("sudo pip install --upgrade git+https://github.com/e9wikner/swc_blog")
 
-    print("project_dir={}".format(project_dir))
     with lcd(project_dir):
         run("sudo git pull")
         run("sudo python3 manage.py makemigrations")
