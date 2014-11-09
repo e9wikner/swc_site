@@ -18,6 +18,7 @@ def prepare(commit_args=""):
     update_repository(commit_args, directory="../swc_blog")
 
     local('python3 manage.py test')
+
     update_repository(commit_args)
 
 
@@ -37,8 +38,10 @@ def stage(project_dir, commit_args=""):
 
     with cd(project_dir):
         run("sudo git pull")
-        run("sudo python3 manage.py makemigrations")
-        run("sudo python3 manage.py migrate")
+        run("sudo python3 manage.py makemigrations "
+            "--settings=swc_site.settings.staging")
+        run("sudo python3 manage.py migrate "
+            "--settings=swc_site.settings.staging")
 
 
 def deploy():
