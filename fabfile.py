@@ -38,10 +38,7 @@ def stage(project_dir, commit_args=""):
     sudo("pip install --upgrade git+https://github.com/e9wikner/swc_blog")
 
     with cd(project_dir):
-        run("env")
-
         sudo("git pull")
-        run("sudo env")
         sudo("python3 manage.py makemigrations "
             "--settings=swc_site.settings.staging")
         sudo("python3 manage.py migrate "
