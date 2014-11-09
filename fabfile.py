@@ -38,8 +38,7 @@ def stage(project_dir, commit_args=""):
 
     with cd(project_dir):
         sudo("git pull")
-        run("source ~/.bashrc")
-        sudo("env")
+        sudo("-E env")
         sudo("sudo python3 manage.py makemigrations "
             "--settings=swc_site.settings.staging")
         sudo("sudo python3 manage.py migrate "
