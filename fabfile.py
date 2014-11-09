@@ -25,7 +25,7 @@ def stage(project_dir, commit_args=""):
     prepare(commit_args)
 
     with settings(warn_only=True):
-        if run("test -d {}".format(os.path.join(project_dir))).failed:
+        if run("test -d {}".format(project_dir)).failed:
             run("sudo mkdir {}".format(project_dir))
             run("sudo git clone https://github.com/e9wikner/swc_site.git {}".format(
                 project_dir))
