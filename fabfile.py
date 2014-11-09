@@ -1,5 +1,6 @@
-from fabric.api import local, lcd, run, cd, sudo, settings
-import os
+from fabric.api import local, lcd, run, cd, sudo, settings, env
+
+env.sudo_prefix += "-E"
 
 
 def update_repository(commit_args, directory="."):
@@ -27,18 +28,18 @@ def stage(project_dir, commit_args=""):
 
     with settings(warn_only=True):
         if run("test -d {}".format(project_dir)).failed:
-            run("sudo mkdir {}".format(project_dir))
-            run("sudo git clone https://github.com/e9wikner/swc_site.git {}".format(
+            sudo("mkdir {}".format(project_dir))
+            sudo("git clone https://github.com/e9wikner/swc_site.git {}".format(
                 project_dir))
-            run("sudo chown -R http {}".format(project_dir))
-            run("sudo chgrp -R http {}".format(project_dir))
+            sudo("chown -R http {}".format(project_dir))
+            sudo("chgrp -R http {}".format(project_dir))
 
     # Install blog app
-    run("sudo pip install --upgrade git+https://github.com/e9wikner/swc_blog")
+    sudo("pip install --upgrade git+https://github.com/e9wikner/swc_blog")
 
     with cd(project_dir):
         sudo("git pull")
-        sudo("-E env")
+        sudo("env")
         sudo("sudo python3 manage.py makemigrations "
             "--settings=swc_site.settings.staging")
         sudo("sudo python3 manage.py migrate "
