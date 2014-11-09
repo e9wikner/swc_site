@@ -38,11 +38,11 @@ def stage(project_dir, commit_args=""):
 
     with cd(project_dir):
         run("sudo git pull")
-        run("env")
+        run("env", shell=False)
         run("sudo python3 manage.py makemigrations "
-            "--settings=swc_site.settings.staging")
+            "--settings=swc_site.settings.staging", shell=False)
         run("sudo python3 manage.py migrate "
-            "--settings=swc_site.settings.staging")
+            "--settings=swc_site.settings.staging", shell=False)
 
 
 def deploy():
