@@ -1,4 +1,4 @@
-from fabric.api import local, lcd, run, settings
+from fabric.api import local, lcd, run, cd, settings
 import os
 
 
@@ -35,8 +35,7 @@ def stage(project_dir, commit_args=""):
     # Install blog app
     run("sudo pip install --upgrade git+https://github.com/e9wikner/swc_blog")
 
-    with lcd(project_dir):
-        run("pwd")
+    with cd(project_dir):
         run("sudo git pull")
         run("sudo python3 manage.py makemigrations")
         run("sudo python3 manage.py migrate")
