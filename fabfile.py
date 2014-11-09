@@ -1,6 +1,6 @@
 from fabric.api import local, lcd, run, cd, sudo, settings, env
 
-env.sudo_prefix = env.sudo_prefix.replace("sudo -S", "sudo -SE")
+env.sudo_prefix = "sudo -SE"
 
 
 def update_repository(commit_args, directory="."):
