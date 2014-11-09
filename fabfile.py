@@ -9,7 +9,7 @@ def update_repository(commit_args, directory="."):
         if local("git status --porcelain", capture=True):
             local("git add . ")
             local("git commit {}".format(commit_args))
-            local("git push")
+            local("git push origin master")
 
 
 def prepare(commit_args=""):
@@ -35,8 +35,8 @@ def stage(project_dir, commit_args=""):
     # Install blog app
     run("sudo pip install --upgrade git+https://github.com/e9wikner/swc_blog")
 
-    print("project_dir={}".format(project_dir))
     with lcd(project_dir):
+        run("pwd")
         run("sudo git pull")
         run("sudo python3 manage.py makemigrations")
         run("sudo python3 manage.py migrate")
