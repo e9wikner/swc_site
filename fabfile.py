@@ -18,6 +18,7 @@ def prepare(commit_args=""):
     update_repository(commit_args, directory="../swc_blog")
 
     local('python3 manage.py test')
+
     update_repository(commit_args)
 
 
