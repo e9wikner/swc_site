@@ -1,4 +1,4 @@
-from fabric.api import local, lcd, run, cd, settings
+from fabric.api import local, lcd, run, cd, sudo, settings
 import os
 
 
@@ -37,12 +37,13 @@ def stage(project_dir, commit_args=""):
     run("sudo pip install --upgrade git+https://github.com/e9wikner/swc_blog")
 
     with cd(project_dir):
-        run("sudo git pull")
-        run("env", shell=False)
-        run("sudo python3 manage.py makemigrations "
-            "--settings=swc_site.settings.staging", shell=False)
-        run("sudo python3 manage.py migrate "
-            "--settings=swc_site.settings.staging", shell=False)
+        sudo("git pull")
+        run("source ~/.bashrc")
+        sudo("env")
+        sudo("sudo python3 manage.py makemigrations "
+            "--settings=swc_site.settings.staging")
+        sudo("sudo python3 manage.py migrate "
+            "--settings=swc_site.settings.staging")
 
 
 def deploy():
