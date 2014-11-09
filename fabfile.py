@@ -1,25 +1,28 @@
 from fabric.api import local, lcd, run, settings
 import os
 
-def prepare(amend_commit):
 
-    commit_args = ""
-    if amend_commit:
-        commit_args = "--amend"
+def update_repository(commit_args, directory="."):
 
-    with lcd("../swc_blog"):
-        # TODO: add testing
-        # local("python3 setup.py install")
-        local("git add . && git commit {}".format(commit_args))
-        local("git push")
+    with lcd(directory):
+        # with settings(warn_only=True):
+        if local("git status --porcelain", capture=True):
+            local("git add . ")
+            local("git commit {}".format(commit_args))
+            local("git push")
+
+
+def prepare(commit_args=""):
+
+    # TODO: add testing
+    update_repository(commit_args, directory="../swc_blog")
 
     local('python3 manage.py test')
-    local("git add . && git commit {}".format(commit_args))
-    local("git push")
+    update_repository(commit_args)
 
 
-def stage(project_dir, amend_commit=False):
-    prepare(amend_commit)
+def stage(project_dir, commit_args=""):
+    prepare(commit_args)
 
     with settings(warn_only=True):
         if run("test -d {}".format(os.path.join(project_dir))).failed:
@@ -30,8 +33,9 @@ def stage(project_dir, amend_commit=False):
             run("sudo chgrp -R http {}".format(project_dir))
 
     # Install blog app
-    run("pip install --upgrade git+https://github.com/e9wikner/swc_blog.git")
+    run("sudo pip install --upgrade git+https://github.com/e9wikner/swc_blog")
 
+    print("project_dir={}".format(project_dir))
     with lcd(project_dir):
         run("sudo git pull")
         run("sudo python3 manage.py makemigrations")
