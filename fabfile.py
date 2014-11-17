@@ -1,6 +1,7 @@
 from fabric.api import local, lcd, run, cd, sudo, settings, env
 
 env.sudo_prefix = "sudo -SE"
+HTTP_ROOT = "/srv/http/swconsulting.se"
 
 
 def update_repository(commit_args, directory="."):
@@ -23,26 +24,37 @@ def prepare(commit_args=""):
     update_repository(commit_args)
 
 
-def stage(project_dir, commit_args=""):
+def collect_static(site_install_dir):
+
+    sudo("chmod g+w " + site_install_dir)
+    with cd(site_install_dir):
+        run("./manage.py collectstatic")
+    sudo("chmod g-w " + site_install_dir)
+
+
+def migrate(site_install_dir):
+
+    with cd(site_install_dir):
+        run("./manage.py makemigrations")
+        run("./manage.py migrate")
+
+
+def stage(commit_args=""):
     prepare(commit_args)
 
     with settings(warn_only=True):
-        if run("test -d {}".format(project_dir)).failed:
-            sudo("mkdir {}".format(project_dir))
+        if run("test -d {}".format(HTTP_ROOT)).failed:
+            sudo("mkdir {}".format(HTTP_ROOT))
             sudo("git clone https://github.com/e9wikner/swc_site.git {}".format(
-                project_dir))
-            sudo("chown -R http {}".format(project_dir))
-            sudo("chgrp -R http {}".format(project_dir))
+                HTTP_ROOT))
+            sudo("chown -R http {}".format(HTTP_ROOT))
+            sudo("chgrp -R http {}".format(HTTP_ROOT))
 
     # Install blog app
     sudo("pip install --upgrade git+https://github.com/e9wikner/swc_blog")
 
-    with cd(project_dir):
-        sudo("git pull")
-        sudo("python3 manage.py makemigrations "
-            "--settings=swc_site.settings.staging")
-        sudo("python3 manage.py migrate "
-            "--settings=swc_site.settings.staging")
+    collect_static(HTTP_ROOT)
+    migrate(HTTP_ROOT)
 
 
 def deploy():
